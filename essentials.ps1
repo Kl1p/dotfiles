@@ -20,12 +20,16 @@ choco install -y vscode
 choco install -y googlechrome.dev
 choco install -y bitwarden
 choco install -y docker-for-windows
+choco install everything
+choco install powertoys
+choco install sublimetext
 choco install -y cmdermini
 choco install -y discord
 choco install -y spotify
 choco install -y dropbox
 choco install -y adobereader
 choco install -y 7zip.install
+choco install gimp
 
 choco install -y Microsoft-Windows-Subsystem-Linux -source windowsfeatures
 choco install wget
