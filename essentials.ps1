@@ -6,6 +6,10 @@ choco install -y insomnia-rest-api-client
 # Install nvm from https://github.com/coreybutler/nvm-windows/releases
 choco install -y jetbrainstoolbox
 choco install -y git.install --params '"/GitOnlyOnPath /NoShellIntegration"'    
+
+#Removes the conflicting powershell alias 
+Remove-Item Alias:wget
+choco install wget
 choco install -y php --params '"/ThreadSafe /InstallDir:C:\PHP"'
 choco install -y composer ngrok
 choco pin add --name composer
