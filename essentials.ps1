@@ -15,3 +15,6 @@ choco install -y composer ngrok
 choco pin add --name composer
 choco install -y apache-httpd --params '"/installLocation:C:\Apache"'
 msiexec.exe /i https://awscli.amazonaws.com/AWSCLIV2.msi
+$host.ui.RawUI.WindowTitle = "Title"
+
+$env:Path += ";YourPathHere"
