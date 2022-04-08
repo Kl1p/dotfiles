@@ -22,6 +22,7 @@ choco install -y bitwarden
 choco install -y docker-for-windows
 choco install everything
 choco install powertoys
+choco install KDE-move-sizer
 choco install sublimetext
 choco install -y cmdermini
 choco install -y discord
