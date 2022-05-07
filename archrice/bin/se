@@ -1,0 +1,8 @@
+#!/bin/sh
+
+script="$(du $HOME/.local/bin/* | /bin/awk '{print $2}' | fzf)"
+
+[ -z "$script" ] && exit
+[ -z "$EDITOR" ] && [ -z "$(whereis nvim | awk '{print $2}')" ] && EDITOR=vim || EDITOR=nvim
+
+$EDITOR $script

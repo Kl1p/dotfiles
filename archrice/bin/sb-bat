@@ -1,0 +1,16 @@
+#!/bin/sh
+
+case $BLOCK_BUTTON in
+	3) notify-send "1";;
+esac
+[ ! -f "/sys/class/power_supply/BAT0/capacity" ] && echo "🚫" && exit
+
+CAPACITY="$(cat /sys/class/power_supply/BAT0/capacity)"
+STATUS="$(cat /sys/class/power_supply/BAT0/status)"
+
+[ "$STATUS" = "Charging" ] && PREFIX="🔌"
+[ "$STATUS" = "Discharging" ] && PREFIX="🔋"
+[ "$STATUS" = "Full" ] && PREFIX="✅"
+
+echo "$PREFIX $CAPACITY%"
+

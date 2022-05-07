@@ -1,0 +1,14 @@
+#!/bin/sh
+
+# Script to change colourscheme
+
+xrs_dir="$HOME/.local/share/xrs"
+
+[ "$1" = "list" ] && ls $xrs_dir | sed 's/\.xdefaults//g' && exit
+[ "$1" = "edit" ] && [ ! -z "$2" ] && nvim $xrs_dir/$2.xdefaults && exit
+
+colscheme="$xrs_dir/$1.xdefaults"
+
+[ ! -f "$colscheme" ] && echo "This colourscheme does not exist." && exit
+xrdb $colscheme
+xdotool key Alt+F5

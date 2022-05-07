@@ -1,0 +1,21 @@
+#!/bin/sh
+
+DEFAULT="$(pactl get-default-sink)"
+
+case $1 in
+	"inc") pactl set-sink-volume $DEFAULT +10%;;
+	"dec") pactl set-sink-volume $DEFAULT -10%;;
+	"mute") [ -f "$HOME/.local/share/mute" ] && pactl set-sink-mute $DEFAULT 0 && rm $HOME/.local/share/mute && ismuted=1
+		[ ! -f "$HOME/.local/share/mute" ] && [ -z "$ismuted" ] && pactl set-sink-mute $DEFAULT 1 && touch $HOME/.local/share/mute ;;
+esac
+
+case $1 in
+	"next") mpc next;;
+	"prev") mpc prev;;
+	"pause") mpc toggle;;
+esac
+
+pkill -RTMIN+16 dwmblocks
+pkill -RTMIN+17 dwmblocks
+pkill -RTMIN+1 i3blocks
+pkill -RTMIN+2 i3blocks

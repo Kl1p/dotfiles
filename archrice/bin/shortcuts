@@ -1,0 +1,101 @@
+#!/bin/sh
+#
+# Shortcuts Script
+# ================
+
+# This script will create the shortcuts for various shells, such
+# as Fish, BASH and ZSH. The syntax for Fish and other POSIX Compliant/Like
+# shells is different
+#
+# In Fish, aliases are not "alias", but rather "abbr <alias> <command>", so
+# for example "alias lf='lfrun'" in fish would be "abbr lf 'lfrun'"
+#
+# Fish is also not POSIX Compliant. At all
+
+ALIAS="$HOME/.local/share/shortcuts/alias"
+DIRECTORIES="$HOME/.local/share/shortcuts/dirs"
+LFDIRS="$HOME/.local/share/shortcuts/lfdirs"
+ENVS="$HOME/.local/share/vars"
+FISH_DIR="$HOME/.config/fish"
+SHELLDIR="$HOME/.config/shell"
+
+ZSHDIR="$HOME/.config/zsh"
+FISH_INSTALLED=0
+ZSH_INSTALLED=0
+BASH_INSTALLED=1
+LF_INSTALLED=0
+
+[ ! -z "$(which fish)" ] && FISH_INSTALLED=1
+[ ! -z "$(which zsh)" ] && ZSH_INSTALLED=1
+[ ! -z "$(which lf)" ] && LF_INSTALLED=1
+
+createFish() {
+	FISH_CONFIG="$FISH_DIR/config.fish" FISH_ABBR="$FISH_DIR/abbreviations"
+
+	IS_SOURCED="$(/bin/grep "source $FISH_ABBR" $FISH_CONFIG)"
+
+	[ -z "$IS_SOURCED" ] && echo "source $FISH_ABBR" >> $FISH_CONFIG
+	[ ! -f "$FISH_ABBR" ] && touch $FISH_ABBR
+
+	printf "#!/usr/bin/fish\n\n" > $FISH_ABBR
+
+	awk -F "\t" '/^[a-z A-Z]/ {print "abbr", $1, "\"" $2 "\""}' $ALIAS >> $FISH_ABBR
+	awk -F "\t" '/^[a-z A-Z]/ {print "abbr", $1, "\"cd", $3, "&& ls\""}' $DIRECTORIES >> $FISH_ABBR
+}
+
+createStandard() {
+	ALIAS_CONFIG="$SHELLDIR/aliasrc" ENVRC="$SHELLDIR/envrc"
+	GNU="$HOME/.config/shell/bashrc" ZSHRC="$ZSHDIR/.zshrc"
+	IS_SOURCED_ZSH="$(/bin/grep "source $ALIAS_CONFIG" $ZSHRC)"
+	IS_SOURCED_GNU="$(/bin/grep "source $ALIAS_CONFIG" $GNU)"
+
+	HISTFILE_GNU="$(/bin/grep "HISTFILE=" $GNU)"
+
+	[ ! -f "$GNU" ] && GNU="$HOME/.bashrc"
+
+	[ -z "$HISTFILE_GNU" ] && echo "HISTFILE=~/.cache/history HISTFILESIZE= HISTSIZE=" >> $GNU
+
+	[ -z "$IS_SOURCED_GNU" ] && echo "source $ALIAS_CONFIG" >> $GNU
+	[ -z "$IS_SOURCED_ZSH" ] && echo "source $ALIAS_CONFIG" >> $ZSHRC
+	[ ! -f "$ALIAS_CONFIG" ] && mkdir -p $SHELLDIR && touch $ALIAS_CONFIG
+
+	DISTRO="$(awk '{print $1}' /etc/issue)"
+	case $DISTRO in
+		"Arch"|"Artix"|"Manjaro"|"Parabola"|"Hyperbola"|"Arco") PKGMANAGER="pacman" PA="p";;
+		"Debian"|*"buntu") PKGMANAGER="apt" PA="a";;
+		"Gentoo") PKGMANAGER="emerge" PA="e";;
+		"Fedora") PKGMANAGER="dnf" PA="d";;
+		"openSUSE") PKGMANAGER="zypper" PA="zy";;
+		*) cat << EOF
+Sorry, the package manager for $DISTRO could not be determined.
+So, package manager aliases will not be created.
+EOF
+	esac
+
+	cat << EOF > $ALIAS_CONFIG
+#!/bin/sh
+
+for command in $PKGMANAGER mount reboot umount shutdown; do
+	alias \$command="sudo \$command"
+done; unset \$command
+
+EOF
+
+	[ ! -z "$PKGMANAGER" ] && echo "alias $PA=\"$PKGMANAGER\"" >> $ALIAS_CONFIG
+
+	awk -F "\t" '/^[a-z A-Z]/ {print "alias", $1 "=\"" $2 "\""}' $ALIAS >> $ALIAS_CONFIG
+	awk '/^[a-z A-Z]/ {print "alias", $1 "=\"cd", $2, "&& ls\""}' $DIRECTORIES >> $ALIAS_CONFIG
+}
+
+createLF() {
+	LF_DIR="$HOME/.config/lf" LFRC="$LF_DIR/lfrc" LFKEYS="$LF_DIR/keys"
+	IS_SOURCED="$(/bin/grep "source $LFKEYS" $LFRC)"
+
+	[ -z "$IS_SOURCED" ] && echo "source $LFKEYS" >> $LFRC
+	
+	awk -F "\t" '/^[a-z A-Z <]/ {print "map", $1, "cd", $2}' $LFDIRS | sed "s/\$HOME/\/home\/$USER/g" > $LFKEYS
+}
+
+[ "$ZSH_INSTALLED" = "1" ] && createStandard
+[ "$FISH_INSTALLED" = "1" ] && createFish
+[ "$LF_INSTALLED" = "1" ] && createLF

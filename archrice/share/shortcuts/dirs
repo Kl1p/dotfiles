@@ -1,0 +1,15 @@
+# vim: filetype=sh
+#
+# DIRECTORY ALIASES
+#
+# This file contains aliases for directories
+
+# <alias>	<directory>
+# ff		$HOME/.local/src
+
+ff		$HOME/.local/src
+dox		$HOME/dox
+sc		$HOME/.local/bin
+ffst		$HOME/.local/src/st
+ffdwm		$HOME/.local/src/dwm
+ffdmn		$HOME/.local/src/dmenu

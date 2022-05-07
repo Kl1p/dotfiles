@@ -1,0 +1,5 @@
+#!/bin/sh
+
+device="$(simple-mtpfs -l | dmenu -l 15 -fn "Roboto Mono:size=10" | awk '{print $1}' | sed 's/://')"
+
+simple-mtpfs --device $device /mnt/phone

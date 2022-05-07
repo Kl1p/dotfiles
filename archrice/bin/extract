@@ -1,0 +1,10 @@
+#!/bin/sh
+
+# Script to extract compressed files
+
+case $1 in
+	*".tar"*) tar xpf $1;;
+	*".zip") unzip $1;;
+	*".rar") unrar x $1;;
+	*".7z") 7z x $1;;
+esac

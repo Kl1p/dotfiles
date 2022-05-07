@@ -1,0 +1,23 @@
+#!/bin/sh
+
+# Tuseday 22 Mar 2022, 6:35pm
+DATE="$(date +'%A %-d %h %Y')"
+TIME="$(date +'%-I:%M%p')"
+HOUR="$(date +'%-I')"
+
+case $HOUR in
+	"1") PREFIX="🕐";;
+	"2") PREFIX="🕑";;
+	"3") PREFIX="🕒";;
+	"4") PREFIX="🕓";;
+	"5") PREFIX="🕔";;
+	"6") PREFIX="🕕";;
+	"7") PREFIX="🕖";;
+	"8") PREFIX="🕗";;
+	"9") PREFIX="🕘";;
+	"10") PREFIX="🕙";;
+	"11") PREFIX="🕚";;
+	"12") PREFIX="🕛";;
+esac
+
+echo "$DATE $TIME $PREFIX"

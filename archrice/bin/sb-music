@@ -1,0 +1,6 @@
+#!/bin/bash
+
+[ ! -z "$(mpc | head -n1 | /bin/grep 'volume')" ] && echo "🚫 Not Playing"
+
+[ ! -z "$(mpc | /bin/grep 'paused')" ] && prefix="⏸" || prefix="🎵"
+echo "$prefix $(mpc | head -n1 | sed 's/\.Flac//;s/\.mp3//;s/\.ogg//')"

@@ -1,0 +1,13 @@
+#!/bin/sh
+
+#ffmpeg -f x11grab -i :0.0 -r 60 -f alsa -ac 1 -i hw:$(arecord -l | awk '/USB/ {print $2}' | sed 's/://') -ar 44100 ~/output.mkv
+
+[ ! -z "$(pgrep 'picom')" ] && killall picom
+
+ffmpeg -y \
+-f x11grab \
+-i :0.0 -r 60 \
+-f pulse -ac 1 -ar 44100 -i default \
+-c:v libx264 -c:a flac $1.mkv
+
+setsid picom -fc &

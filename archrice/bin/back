@@ -1,0 +1,23 @@
+#!/bin/sh
+
+usewal=0
+
+# Change the background
+case $1 in
+	"sel") CHOSEN="$(sxiv $HOME/wallpapers -tro)"
+		[ ! -f "$HOME/.local/share/bg" ] && rm -f $HOME/.local/share/bg
+		ln -sf "$CHOSEN" $HOME/.local/share/bg;;
+
+	*".jpg"|*".jpeg"|*".png") [ ! -f "$HOME/.local/share/bg" ] && rm -f $HOME/.local/share/bg
+		ln -sf "$1" $HOME/.local/share/bg;;
+
+	"random") [ ! -f "$HOME/.local/share/bg" ] && rm -f $HOME/.local/share/bg
+		ln -sf "$HOME/wallpapers/$(ls $HOME/wallpapers | shuf | head -n1)" $HOME/.local/share/bg;;
+esac
+case $usewal in
+	1) [ ! -f "$HOME/.cache/wal/schemes/_home_$USER*" ] && rm $HOME/.cache/wal/schemes/_home_$USER*
+		wal -i $HOME/.local/share/bg > /dev/null 2>&1
+		xdotool key Alt+F5
+		;;
+	0) xwallpaper --zoom $HOME/.local/share/bg;;
+esac

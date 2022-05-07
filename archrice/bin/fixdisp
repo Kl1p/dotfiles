@@ -1,0 +1,17 @@
+#!/bin/sh
+
+DISPLAYS="$(xrandr | grep ' connected' | wc -l)"
+
+[ "$DISPLAYS" = "1" ] && echo "Only 1 display connected" && notify-send "Cannot Switch Displays" \
+	"Only one display is connected"
+
+[ "$DISPLAYS" = "1" ] && exit
+
+case $1 in
+	"vga"|*) xrandr --output VGA1 --mode 1920x1080 --right-of LVDS1 && xrandr --output LVDS1 --off;;
+	"lvds") xrandr --output LVDS --mode 1366x768 && xrandr --output VGA1 --off;;
+esac
+
+back
+xset r rate 300 50
+setxkbmap gb

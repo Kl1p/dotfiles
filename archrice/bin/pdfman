@@ -1,0 +1,4 @@
+#!/bin/sh
+
+manpage="$(man -k . | dmenu -fn "Roboto Mono:size=10" -l 15 | awk '{print $1}')"
+man -Tpdf $manpage | zathura -

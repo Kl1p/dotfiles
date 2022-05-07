@@ -1,0 +1,5 @@
+#!/bin/sh
+
+packages="$(/bin/pacman -Qu | wc -l)"
+
+echo "📦 $packages"

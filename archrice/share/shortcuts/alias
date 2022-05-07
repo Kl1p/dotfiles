@@ -1,0 +1,53 @@
+# vim: syntax=sh
+# Alias Creation File
+# ===================
+#
+# This file specifies the aliases for various shells, ie.
+# Fish, GNU Bash and/or ZSH.
+
+ls	ls --color=auto --group-directories-first
+l	ls
+la	ls -la
+lh	ls -lah
+grep	grep --color=auto
+diff	diff --color=auto
+#cat	bat
+nv	nvim
+vim	nvim
+net	ping gnu.org
+sdn	sudo shutdown now
+rbt	sudo reboot
+ncm	ncmpcpp
+m	make
+mc	make clean
+smi	sudo make install
+g	git
+gc	git clone
+gp	git push
+gpl	curl https://www.gnu.org/licenses/old-licenses/gpl-2.0.txt | bat
+lf	lfrun
+z	setsid zathura
+h	htop
+TeX	cp ~/dox/tex/template.tex
+SS	sudo systemctl
+slf	sudo lfrun
+pm	pulsemixer
+am	alsamixer
+ka	kilall
+xorg	cd && startx
+sx	cd && startx
+sv	sudo nvim
+oi	offlineimap -c $HOME/.config/offlineimaprc
+nm	neomutt
+ccat	highlight --out-format=ansi
+TC	rm *.toc *.aux *.log *.out -f
+nb	newsboat
+ka	killall
+cs	wal --preview
+mpu	mpc update
+ea	nvim $HOME/.local/share/shortcuts/alias
+ed	nvim $HOME/.local/share/shortcuts/dirs
+eld	nvim $HOME/.local/share/shortcuts/lfdirs
+ewm	nvim $HOME/.local/src/dwm/config.def.h
+est	nvim $HOME/.local/src/st/config.def.h
+en	nvim $HOME/.config/nvim/init.vim
