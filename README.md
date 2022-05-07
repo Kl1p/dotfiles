@@ -1,10 +1,14 @@
-PowerShell scripts for personal use.
+# The Arch Rice
+This repository contains my installable dotfiles for various programs.
 
-Mainly:
+This includes settings for
 
-    chocolatey to make install things easier
-    PowerShell and Windows Registry for uninstalling and configuring other stuff
++ NeoVim
++ ZSH
++ Fish
++ Bash
++ NCMPCPP
++ lf
 
-
-run:
-Set-ExecutionPolicy Bypass
+## `.local/bin`
+The directory `.local/bin` contains the scripts that I use, such as the `shortucts` script for remaking my aliases in various shells, and hotkeys in `lf`
