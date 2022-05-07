@@ -1,4 +1,4 @@
-# The Arch Rice
+# Arch 
 This repository contains my installable dotfiles for various programs.
 
 This includes settings for
