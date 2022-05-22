@@ -20,20 +20,21 @@ choco install -y vscode
 choco install -y googlechrome.dev
 choco install -y bitwarden
 choco install -y docker-for-windows
-choco install everything
-choco install powertoys
-choco install KDE-move-sizer
-choco install sublimetext
+choco install -y checksum
+choco install -y everything
+choco install -y powertoys
+choco install -y KDE-move-sizer
+choco install -y sublimetext
 choco install -y cmdermini
 choco install -y discord
 choco install -y spotify
 choco install -y dropbox
 choco install -y adobereader
 choco install -y 7zip.install
-choco install gimp
+choco install -y gimp
 
 choco install -y Microsoft-Windows-Subsystem-Linux -source windowsfeatures
-choco install wget
+choco install -y wget
 choco install -y php --params '"/ThreadSafe /InstallDir:C:\PHP"'
 choco install -y composer ngrok
 choco pin add --name composer
@@ -56,7 +57,7 @@ Set-ItemProperty -Path HKCU:\SOFTWARE\Microsoft\Windows\CurrentVersion\Advertisi
 #Set-ItemProperty -Path HKCU:\SOFTWARE\Microsoft\Windows\CurrentVersion\AdvertisingInfo -Name Enabled -Type DWord -Value 1
 
 
-#random
+#random utilities
 $env:Path += ";YourPathHere"
 function  google {
     $link = Read-Host "Search"       
